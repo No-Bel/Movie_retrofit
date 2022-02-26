@@ -42,7 +42,8 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
         val img = imageBaseUrl + movieImg
         //imageView
         val imgHolder = holder.itemView.img_itemHolder
-        Glide.with(holder.itemView.context).load(img).into(imgHolder)
+        val context = holder.itemView.context
+        Glide.with(context).load(img).into(imgHolder)
 
         holder.itemView.movie_name.text = currentItem.name
         holder.itemView.vote_average.text = currentItem.voteAverage.toString()

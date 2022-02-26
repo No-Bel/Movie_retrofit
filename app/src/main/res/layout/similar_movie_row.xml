@@ -8,6 +8,7 @@
     app:cardElevation="6dp">
 
     <ImageView
+        android:id="@+id/currentImg_holder"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@mipmap/img_1" />

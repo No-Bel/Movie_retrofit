@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.const.Constants
+import com.example.movieapp.const.Constants.Companion.IMAGE_BASE_URL
 import com.example.movieapp.moviedata.MovieData
 import kotlinx.android.synthetic.main.movie_row.view.*
 
-class SimilarAdapter: RecyclerView.Adapter<SimilarAdapter.SimilarViewHolder>() {
+class SimilarAdapter : RecyclerView.Adapter<SimilarAdapter.SimilarViewHolder>() {
 
     private var similarList = ArrayList<MovieData>()
 
@@ -35,18 +36,15 @@ class SimilarAdapter: RecyclerView.Adapter<SimilarAdapter.SimilarViewHolder>() {
 
         val currentItem = similarList[position]
 
+        val imgBaseUrl = IMAGE_BASE_URL
         val movieImg = currentItem.backdropPath
-        val imageBaseUrl = Constants.IMAGE_BASE_URL
-        //my url || image_base_url + backdrop_path
-        val img = imageBaseUrl + movieImg
-        //imageView
+
+        val currentImg = imgBaseUrl + movieImg
         val imgHolder = holder.itemView.img_itemHolder
-        Glide.with(holder.itemView.context).load(img).into(imgHolder)
-
-        holder.itemView.movie_name.text = currentItem.name
-        holder.itemView.vote_average.text = currentItem.voteAverage.toString()
-
+        val context = holder.itemView.context
+//        Glide.with(holder.itemView.context).load(currentImg).into(imgHolder)
         holder.similarMovieDetail(currentItem)
+
 
     }
 

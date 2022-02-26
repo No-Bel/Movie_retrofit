@@ -76,7 +76,7 @@ class MovieDetailScreenFragment(private val movie: MovieData) : Fragment(),
         repository = Repository()
         viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        viewModel.getMovieVm(API_KEY)
+        viewModel.getMovie(API_KEY)
         viewModel.myResponse.observe(viewLifecycleOwner, Observer {
             similarAdapter.setSimilarMovieData(it.body()!!.results)
             Log.d("Res", "${it.body()}")
