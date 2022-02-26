@@ -1,22 +1,13 @@
 package com.example.movieapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Adapter
-import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.adapter.MyAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.fragment.HomeScreenFragment
-import com.example.movieapp.fragment.MovieScreenFragment
+import com.example.movieapp.fragment.MovieDetailScreenFragment
 
 
-class MainActivity : AppCompatActivity(), MyAdapter.GoToMovieFragment {
+class MainActivity : AppCompatActivity(), MovieDetailScreenFragment.GoHomeScreen {
 
 
     private lateinit var binding: ActivityMainBinding
@@ -25,10 +16,12 @@ class MainActivity : AppCompatActivity(), MyAdapter.GoToMovieFragment {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         homeScreen()
 
     }
 
+    //first app screen
     private fun homeScreen() {
         supportFragmentManager
             .beginTransaction()
@@ -36,10 +29,11 @@ class MainActivity : AppCompatActivity(), MyAdapter.GoToMovieFragment {
             .commit()
     }
 
-    override fun goToMovieFragment() {
+
+    override fun goHomeScreen() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, MovieScreenFragment())
+            .replace(R.id.fragment_container, HomeScreenFragment())
             .commit()
     }
 }

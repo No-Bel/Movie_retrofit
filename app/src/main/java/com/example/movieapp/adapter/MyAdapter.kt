@@ -4,38 +4,68 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movieapp.R
+import com.example.movieapp.const.Constants.Companion.IMAGE_BASE_URL
+import com.example.movieapp.moviedata.MovieData
 import kotlinx.android.synthetic.main.movie_row.view.*
 
-class MyAdapter: RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    private var movieName = arrayOf("Movie1","Movie2","Movie3","Movie4","Movie5",
-        "Movie6","Movie7","Movie8","Movie9","Movie10")
-    private var movieOverview = arrayOf("6.6", "6.6","6.6","6.6","6.6","6.6","6.6","6.6","6.6","6.6")
-    private var movieImg = intArrayOf(R.mipmap.img, R.mipmap.img, R.mipmap.img, R.mipmap.img,
-        R.mipmap.img, R.mipmap.img,R.mipmap.img,R.mipmap.img,R.mipmap.img,R.mipmap.img)
 
-    inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    private var movieList = ArrayList<MovieData>()
+
+
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun movieDetail(movie: MovieData) {
+            itemView.setOnClickListener {
+                listenerDetailScreen?.detailScreen(movie)
+
+            }
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false))
+        return MyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItemName = movieName[position]
-        val currentItemOverview = movieOverview[position]
-        holder.itemView.movie_name.text = currentItemName
-        holder.itemView.vote_average.text = currentItemOverview
-        holder.itemView.item_holder_img.setImageResource(movieImg[position])
+
+        val currentItem = movieList[position]
+
+        val movieImg = currentItem.backdropPath
+        val imageBaseUrl = IMAGE_BASE_URL
+        //my url || image_base_url + backdrop_path
+        val img = imageBaseUrl + movieImg
+        //imageView
+        val imgHolder = holder.itemView.img_itemHolder
+        Glide.with(holder.itemView.context).load(img).into(imgHolder)
+
+        holder.itemView.movie_name.text = currentItem.name
+        holder.itemView.vote_average.text = currentItem.voteAverage.toString()
+        holder.movieDetail(currentItem)
+
+
     }
 
-    override fun getItemCount() = movieName.size
+    override fun getItemCount() = movieList.size
 
-    private var listenerGoMovieScreenFragment: GoToMovieFragment? = null
+    fun setMovieData(newMovieList: List<MovieData>) {
+        movieList = newMovieList as ArrayList<MovieData>
+        notifyDataSetChanged()
+    }
 
-    interface GoToMovieFragment {
-        fun goToMovieFragment()
+    private var listenerDetailScreen: DetailScreen? = null
+
+    interface DetailScreen {
+        fun detailScreen(movie: MovieData)
+    }
+
+    fun editMovieItem(listener: DetailScreen) {
+        this.listenerDetailScreen = listener
     }
 
 }
