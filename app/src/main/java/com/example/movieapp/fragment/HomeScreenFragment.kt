@@ -25,9 +25,9 @@ class HomeScreenFragment : Fragment(), MyAdapter.DetailScreen {
     private lateinit var viewModel: MainViewModel
     private lateinit var myAdapter: MyAdapter
     private lateinit var myRecyclerView: RecyclerView
+    private lateinit var repository: Repository
+    private lateinit var viewModelFactory: MainViewModelFactory
 
-    lateinit var movieImg: Array<Int>
-    lateinit var movieName: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +47,8 @@ class HomeScreenFragment : Fragment(), MyAdapter.DetailScreen {
         myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         myAdapter.editMovieItem(this)
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
+        repository = Repository()
+        viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.getMovie(API_KEY)
@@ -56,6 +56,8 @@ class HomeScreenFragment : Fragment(), MyAdapter.DetailScreen {
             myAdapter.setMovieData(it.body()!!.results)
             Log.d("Response", "${it.body()}")
         })
+
+
 
         return view
     }

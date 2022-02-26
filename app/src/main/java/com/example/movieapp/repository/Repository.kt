@@ -9,4 +9,11 @@ class Repository {
     suspend fun getMovie(api: String): Response<Movies> {
         return MyRetrofit.api.getMovie(api)
     }
+    suspend fun getMovieRp(api: String): Response<Movies> {
+        return MyRetrofit.api.getMovie(api)
+    }
+
+    suspend fun getSimilarMovieRp(movieId: Int): Response<Movies> {
+        return MyRetrofit.api.getSimilarMovie(movieId)
+    }
 }

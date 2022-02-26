@@ -19,4 +19,18 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             myResponse.value = response
         }
     }
+
+    fun getMovieVm(api: String) {
+        viewModelScope.launch {
+            val response = repository.getMovie(api)
+            myResponse.value = response
+        }
+    }
+
+    fun getSimilarMovieVm(movieId: Int) {
+        viewModelScope.launch {
+            val response = repository.getSimilarMovieRp(movieId)
+            myResponse.value = response
+        }
+    }
 }

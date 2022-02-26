@@ -46,6 +46,7 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
         holder.itemView.movie_name.text = currentItem.name
         holder.itemView.vote_average.text = currentItem.voteAverage.toString()
+
         holder.movieDetail(currentItem)
 
 
